@@ -27,7 +27,7 @@ jobs:
       - name: Create and push tag
         run: |
           git tag -a ${{ inputs.release }} -m ' This is ${{ inputs.release }} '
-          git push origin${{ inputs.release }}
+          git push origin ${{ inputs.release }}
 
       - name: Create Release
         id: create_release
