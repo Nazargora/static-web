@@ -1,6 +1,12 @@
 name: Relase
 
 on:
+  workflow_call:
+     inputs:
+       release:
+          description: 'The release-number. Based on this number version.html files, jira releases and github repo tags will be created.'
+          required: true
+          type: string
   workflow_dispatch:
     inputs:
       release:
