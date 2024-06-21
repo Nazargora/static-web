@@ -27,12 +27,13 @@ jobs:
       - name: Create and push tag
         run: |
           git tag -a ${{ inputs.release }} -m ' This is ${{ inputs.release }} '
-          git push origin ${{ inputs.release }}
+          git push origin${{ inputs.release }}
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: "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" # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ inputs.release }}
           release_name: ${{ inputs.release }}
