@@ -1,0 +1,39 @@
+name: Relase
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'The release number. Based on this number, version.html files, Jira releases, and GitHub repo tags will be created.'
+        required: true
+        type: string
+
+jobs:
+  create_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Git
+        run: |
+          git config --global user.email "gorchshnko@gmail.com"
+          git config --global user.name "Nazargora"
+      - name: Create and push tag
+        run: |
+          git tag -a ${{ inputs.release }} -m ' This is ${{ inputs.release }} '
+          git push origin ${{ inputs.release }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: "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" # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ inputs.release }}
+          release_name: ${{ inputs.release }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
+        
